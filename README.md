@@ -168,15 +168,198 @@ sudo systemctl status wazuh-dashboard
 1. Open the Wazuh agent configuration file:
 
    C:\Program Files (x86)\ossec-agent\ossec.conf
+   
+![ossec-agent](https://github.com/Varun-hubb/File-Integrity-Monitoring/blob/main/screenshots/ossec-agent.png)
 
-2. Locate the <syscheck> section.
-3. Add directories to monitor:
+3. Locate the <syscheck> section.
+4. Add directories to monitor:
 
-   ```xml
-   <directories check_all="yes">C:\TestFolder</directories>
+```md
+  <directories check_all="yes" realtime="yes">C:\TestFIM</directories> 
+  <directories check_all="yes">C:\Users</directories>
+  <directories check_all="yes">C:\ImportantFiles</directories>
    ```
-4. Save the file.
-5. Restart the Wazuh agent service.
+![ossec-conf](https://github.com/Varun-hubb/File-Integrity-Monitoring/blob/main/screenshots/ossec-conf.png)
 
+5. Save the file.
+6. Restart the Wazuh agent service.
+
+![wazuh-services](https://github.com/Varun-hubb/File-Integrity-Monitoring/blob/main/screenshots/wazuh-services-tab-2.png)
+
+---
+
+### Step 6. Restart and Verify Services
+
+## Service Verification
+
+1. Restart the Wazuh agent:
+
+```powershell
+net stop wazuhsvc
+net start wazuhsvc
+```
+Check logs:
+
+2. C:\Program Files (x86)\ossec-agent\ossec.log
+
+3. Ensure no critical errors are present.
+
+![ossec-log-confirmation](https://github.com/Varun-hubb/File-Integrity-Monitoring/blob/main/screenshots/ossec-log-confirmation.jpeg)
+
+4. Ensure that "Real-Time file integrity monitoring" message appeared.
+
+---
+
+### Step 7. Test Connectivity
+
+1. Open Wazuh Dashboard.
+2. Navigate to Agents.
+3. Verify agent status is "Active".
+4. Confirm last keepalive time is updating.
+
+![wazuh-agent-active](https://github.com/Varun-hubb/File-Integrity-Monitoring/blob/main/screenshots/wazuh%20agent%20active.png)
+Agent status = Active
+
+---
+
+### Step 8. FIM Testing Scenarios
+1. Directory Creation
+2. File Creation
+3. File Modification
+4. File Deletion
+5. Output Results in Wazuh Dashboard
+
+## Expected Behavior
+
+1. Wazuh agent detects new directory.
+2. Syscheck (FIM module) generates an event.
+3. Event is sent to Wazuh Manager.
+4. Alert appears in Wazuh Dashboard.
+
+### Step 9. Results
+
+## File Integrity Monitoring Output
+
+After performing file operations inside:
+
+C:\TestFIM
+
+The Wazuh Dashboard successfully detected and logged the following events:
+
+- Directory creation detected
+- File creation detected (Event: added | Rule ID: 554)
+- File modification detected (Event: modified | Rule ID: 550)
+- File deletion detected (Event: deleted | Rule ID: 553)
+
+## Alert Details Observed
+
+Each alert contained:
+
+- Agent name
+- File path (syscheck.path)
+- Event type (added / modified / deleted)
+- Rule ID and rule description
+- Severity level
+- Timestamp
+
+## Dashboard Verification
+
+- Alerts visible under: **File Integrity Monitoring → Events**
+- Time filter used: **Last 15 minutes**
+- Events indexed in OpenSearch
+- Real-time detection confirmed
+
+---
+
+### Output Screenshots
+
+![output-1](https://github.com/Varun-hubb/File-Integrity-Monitoring/blob/main/screenshots/output-1.jpeg)
+![main-output](https://github.com/Varun-hubb/File-Integrity-Monitoring/blob/main/screenshots/main-output.jpeg)
+
+---
+### Security Analysis
+
+## Detection Capability Assessment
+
+The implemented File Integrity Monitoring (FIM) solution successfully detected and logged all unauthorized file activities performed within the monitored directory (`C:\TestFIM`). The Wazuh syscheck module generated real-time alerts for:
+
+- File creation (Rule ID: 554)
+- File modification / checksum change (Rule ID: 550)
+- File deletion (Rule ID: 553)
+
+This confirms that the monitoring configuration is functioning correctly and that endpoint-level visibility has been established.
+
+---
+
+## Threat Behavior Mapping
+
+The observed file events directly align with common attacker techniques:
+
+- **File Creation**  
+  May indicate malware dropper activity, unauthorized script deployment, or persistence mechanisms.
+
+- **File Modification**  
+  Detected via checksum comparison, this can signal:
+  - Configuration tampering
+  - Backdoor insertion
+  - Privilege escalation preparation
+  - Data manipulation
+
+- **File Deletion**  
+  Often associated with:
+  - Evidence removal
+  - Log wiping
+  - Anti-forensics techniques
+
+The system successfully identified all these behaviors, demonstrating effective integrity monitoring.
+
+---
+
+## Alert Severity & Prioritization
+
+The detected events included severity levels:
+
+- Level 5 → File added
+- Level 7 → File modified or deleted
+
+Higher severity for modification and deletion reflects greater potential risk, supporting effective alert prioritization during SOC triage.
+
+This allows analysts to:
+
+- Quickly identify high-risk events
+- Investigate potential compromise
+- Reduce mean time to detection (MTTD)
+
+---
+
+## SOC Workflow Validation
+
+The project validates a complete SIEM detection workflow:
+
+1. Endpoint event generation (Windows Agent)
+2. Secure log transmission to Wazuh Manager
+3. Rule-based analysis and alert generation
+4. Log indexing in OpenSearch
+5. Visualization and investigation in Wazuh Dashboard
+
+This demonstrates practical understanding of:
+
+- Log pipelines
+- Event correlation
+- Detection engineering fundamentals
+- Alert triage process
+
+---
+
+## Security Value
+
+By implementing FIM:
+
+- Unauthorized file changes are immediately visible.
+- Integrity violations are traceable via hash comparison.
+- Analysts gain forensic visibility into endpoint activity.
+- Incident response time is significantly improved.
+
+This implementation strengthens endpoint security monitoring and enhances proactive threat detection capabilities.
 
 
