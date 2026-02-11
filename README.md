@@ -86,10 +86,97 @@ This section describes the complete setup process from installing Wazuh v4.12 to
 ---
 
 ### Step 1: Install Wazuh Server (Ubuntu 22.04)
+1. Log in to the Ubuntu virtual machine.
+2. Update the system packages:
 
-Download and execute the official installation script:
+   ```bash
+   sudo apt update && sudo apt upgrade -y
+   ```
+3. Download and execute the official installation script:
 
 ```bash
-curl -sO https://packages.wazuh.com/4.12/wazuh-install.sh
+curl -sO https://packages.wazuh.com/4.14/wazuh-install.sh
 sudo bash wazuh-install.sh -a
+```
+![Wazuh Install](https://github.com/Varun-hubb/File-Integrity-Monitoring/blob/main/screenshots/Wazuh%20Installed.png)
+
+4. Wait for the installation to complete.
+5. Note down the generated admin credentials.
+
+---
+
+### Step 2: Verify Installation
+
+```md
+### Step 2: Verify Installation
+
+```bash
+sudo systemctl status wazuh-manager
+sudo systemctl status wazuh-indexer
+sudo systemctl status wazuh-dashboard
+````
+
+![Services](https://github.com/Varun-hubb/File-Integrity-Monitoring/blob/main/screenshots/wazuh-manager-status.png)
+
+---
+
+### Step 3. Access Wazuh Dashboard
+
+## Accessing the Wazuh Dashboard
+
+1. Open a web browser on the Ubuntu system.
+2. Navigate to:
+
+```md
+   https://localhost
+```
+3. Accept the security warning.
+4. Log in using the admin credentials.
+5. Verify that the dashboard loads successfully.
+
+![Wazuh-login-page](https://github.com/Varun-hubb/File-Integrity-Monitoring/blob/main/screenshots/wazuh-login-page.png)
+
+![Dashboard](https://github.com/Varun-hubb/File-Integrity-Monitoring/blob/main/screenshots/wazuh-dashboard-1.png)
+
+---
+
+### Step 4. Installing Wazuh Agent on Windows 11
+
+1. Log in to the Wazuh Dashboard.
+2. Go to: Management → Agents → Add Agent.
+3. Enter agent details (Name, IP, OS).
+4. Copy the generated installation command.
+5. Open PowerShell as Administrator.
+6. Paste and execute the command.
+7. Start the agent service:
+
+   ```powershell
+   net start wazuhsvc
+   ```
+![Wazuh-agent-creation](https://github.com/Varun-hubb/File-Integrity-Monitoring/blob/main/screenshots/wazuh-agent-creation-2.png)
+
+![wazuh-agent-command](https://github.com/Varun-hubb/File-Integrity-Monitoring/blob/main/screenshots/wazuh%20agent%20installing-1.png)
+
+![wazuh-agent-installing](https://github.com/Varun-hubb/File-Integrity-Monitoring/blob/main/screenshots/wazuh-agent-installing-2.png)
+
+---
+
+### Step 5. Configure File Integrity Monitoring (FIM)
+
+### Configuring File Integrity Monitoring
+
+1. Open the Wazuh agent configuration file:
+
+   C:\Program Files (x86)\ossec-agent\ossec.conf
+
+2. Locate the <syscheck> section.
+3. Add directories to monitor:
+
+   ```xml
+   <directories check_all="yes">C:\TestFolder</directories>
+   ```
+4. Save the file.
+5. Restart the Wazuh agent service.
+
+
 
