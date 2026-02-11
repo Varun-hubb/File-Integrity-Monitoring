@@ -4,11 +4,11 @@ This project demonstrates the implementation of File Integrity Monitoring using 
 ## Objective
 The objective of this project is to implement and demonstrate File Integrity Monitoring (FIM) using Wazuh SIEM to detect, log, and analyze unauthorized changes to critical files and system configurations on a Windows system, enabling improved security monitoring and incident response.
 
-## 🏗️ System Architecture
+### System Architecture
 
 ![System Architecture](docs/architecture.drawio.png)
 
-### 🔹 Component Explanation
+###  Component Explanation
 
 The architecture of this File Integrity Monitoring system consists of the following main components:
 
@@ -44,7 +44,7 @@ The architecture of this File Integrity Monitoring system consists of the follow
 - Investigates suspicious file or registry changes.
 - Takes corrective actions if needed.
 
-### 🔹 Data Flow Description
+###  Data Flow Description
 
 The data flow in the File Integrity Monitoring system follows a structured pipeline:
 
@@ -79,7 +79,7 @@ The data flow in the File Integrity Monitoring system follows a structured pipel
 - Draw.io (Architecture Diagram Tool)
 - Git & GitHub (Version Control)
 
-## 🛠️ Installation and Setup
+### Installation and Setup
 
 This section describes the complete setup process from installing Wazuh v4.12 to validating File Integrity Monitoring (FIM).
 
