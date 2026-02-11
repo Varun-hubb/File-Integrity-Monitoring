@@ -79,22 +79,17 @@ The data flow in the File Integrity Monitoring system follows a structured pipel
 - Draw.io (Architecture Diagram Tool)
 - Git & GitHub (Version Control)
 
+## 🛠️ Installation and Setup
 
-### Skills Learned
-[Bullet Points - Remove this afterwards]
+This section describes the complete setup process from installing Wazuh v4.12 to validating File Integrity Monitoring (FIM).
 
-- Advanced understanding of SIEM concepts and practical application.
-- Proficiency in analyzing and interpreting network logs.
-- Ability to generate and recognize attack signatures and patterns.
-- Enhanced knowledge of network protocols and security vulnerabilities.
-- Development of critical thinking and problem-solving skills in cybersecurity.
+---
 
+### Step 1: Install Wazuh Server (Ubuntu 22.04)
 
-## Steps
-drag & drop screenshots here or use imgur and reference them using imgsrc
+Download and execute the official installation script:
 
-Every screenshot should have some text explaining what the screenshot is about.
+```bash
+curl -sO https://packages.wazuh.com/4.12/wazuh-install.sh
+sudo bash wazuh-install.sh -a
 
-Example below.
-
-*Ref 1: Network Diagram*
